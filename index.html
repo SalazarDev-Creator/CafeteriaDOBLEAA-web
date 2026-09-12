@@ -37,7 +37,9 @@ textarea {
   font-family: inherit;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header {
   background: #111;
@@ -59,7 +61,9 @@ header p {
   font-size: 14px;
 }
 
-/* BUSCADOR */
+/* =========================
+   BUSCADOR
+========================= */
 
 .search-box {
   max-width: 900px;
@@ -75,7 +79,9 @@ header p {
   outline: none;
 }
 
-/* CATEGORÍAS */
+/* =========================
+   CATEGORÍAS
+========================= */
 
 .categories {
   position: sticky;
@@ -102,6 +108,7 @@ header p {
   background: white;
   color: #222;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .category-btn.active {
@@ -110,7 +117,9 @@ header p {
   border-color: #111;
 }
 
-/* CONTENEDOR */
+/* =========================
+   CONTENEDOR
+========================= */
 
 .container {
   width: min(1100px, 100%);
@@ -123,7 +132,9 @@ header p {
   font-size: 22px;
 }
 
-/* PRODUCTOS */
+/* =========================
+   PRODUCTOS
+========================= */
 
 .menu {
   display: grid;
@@ -189,7 +200,9 @@ header p {
   transform: scale(.96);
 }
 
-/* TENDENCIAS */
+/* =========================
+   TENDENCIAS
+========================= */
 
 .trending {
   background: linear-gradient(135deg, #111, #272727);
@@ -220,9 +233,12 @@ header p {
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }
 
-/* CARRITO FLOTANTE */
+/* =========================
+   CARRITO FLOTANTE
+========================= */
 
 .cart-floating {
   position: fixed;
@@ -250,7 +266,9 @@ header p {
   color: #ccc;
 }
 
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
 
 .modal {
   position: fixed;
@@ -280,6 +298,7 @@ header p {
   from {
     transform: translateY(100%);
   }
+
   to {
     transform: translateY(0);
   }
@@ -297,9 +316,14 @@ header p {
   background: #eee;
   color: #111;
   padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-/* ITEMS CARRITO */
+/* =========================
+   ITEMS CARRITO
+========================= */
 
 .cart-item {
   padding: 13px 0;
@@ -334,6 +358,8 @@ header p {
   border-radius: 8px;
   background: #111;
   color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .quantity {
@@ -356,7 +382,9 @@ header p {
   justify-content: space-between;
 }
 
-/* FORMULARIO */
+/* =========================
+   FORMULARIO
+========================= */
 
 .form-group {
   margin-bottom: 12px;
@@ -400,9 +428,17 @@ textarea {
   border-radius: 12px;
   font-size: 17px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-/* ANIMACIÓN */
+.confirm-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   ANIMACIÓN PRODUCTO
+========================= */
 
 .flying-product {
   position: fixed;
@@ -426,13 +462,26 @@ textarea {
 }
 
 @keyframes cartBounce {
-  0% { transform: translateX(-50%) scale(1); }
-  40% { transform: translateX(-50%) scale(1.08); }
-  70% { transform: translateX(-50%) scale(.96); }
-  100% { transform: translateX(-50%) scale(1); }
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+
+  40% {
+    transform: translateX(-50%) scale(1.08);
+  }
+
+  70% {
+    transform: translateX(-50%) scale(.96);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
 }
 
-/* VACÍO */
+/* =========================
+   VACÍO
+========================= */
 
 .empty {
   text-align: center;
@@ -440,7 +489,9 @@ textarea {
   color: #777;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer {
   text-align: center;
@@ -449,9 +500,12 @@ footer {
   font-size: 14px;
 }
 
-/* DESKTOP */
+/* =========================
+   DESKTOP
+========================= */
 
 @media (min-width: 700px) {
+
   .modal {
     align-items: center;
   }
@@ -473,10 +527,23 @@ footer {
   }
 
   @keyframes cartBounceDesktop {
-    0% { transform: scale(1); }
-    40% { transform: scale(1.08); }
-    70% { transform: scale(.96); }
-    100% { transform: scale(1); }
+
+    0% {
+      transform: scale(1);
+    }
+
+    40% {
+      transform: scale(1.08);
+    }
+
+    70% {
+      transform: scale(.96);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+
   }
 }
 </style>
@@ -485,185 +552,362 @@ footer {
 <body>
 
 <header>
+
   <h1>🍔 CAF. DOBLE A</h1>
-  <p>Comida • Jugos • Refrescos • Más</p>
+
+  <p>
+    Comida • Jugos • Refrescos • Más
+  </p>
 
   <div class="search-box">
+
     <input
       id="buscador"
       type="search"
       placeholder="🔎 Buscar en el menú..."
       oninput="buscarProductos()"
     >
+
   </div>
+
 </header>
 
+
 <nav class="categories">
-  <button class="category-btn active" onclick="filtrarCategoria('Todos', this)">
+
+  <button
+    class="category-btn active"
+    onclick="filtrarCategoria('Todos', this)"
+  >
     Todos
   </button>
 
-  <button class="category-btn" onclick="mostrarTendencias(this)">
+  <button
+    class="category-btn"
+    onclick="mostrarTendencias(this)"
+  >
     🔥 Tendencias
   </button>
 
-  <button class="category-btn" onclick="filtrarCategoria('Comida', this)">
+  <button
+    class="category-btn"
+    onclick="filtrarCategoria('Comida', this)"
+  >
     🍔 Comida
   </button>
 
-  <button class="category-btn" onclick="filtrarCategoria('Cerveza', this)">
+  <button
+    class="category-btn"
+    onclick="filtrarCategoria('Cerveza', this)"
+  >
     🍺 Cervezas
   </button>
 
-  <button class="category-btn" onclick="filtrarCategoria('Jugos', this)">
+  <button
+    class="category-btn"
+    onclick="filtrarCategoria('Jugos', this)"
+  >
     🥤 Jugos
   </button>
 
-  <button class="category-btn" onclick="filtrarCategoria('Refresco', this)">
+  <button
+    class="category-btn"
+    onclick="filtrarCategoria('Refresco', this)"
+  >
     🥤 Refrescos
   </button>
+
 </nav>
+
 
 <main class="container">
 
-  <section id="tendencias" class="trending" style="display:none;">
-    <h2>🔥 Lo más pedido</h2>
-    <p>Productos destacados de los pedidos registrados.</p>
+  <section
+    id="tendencias"
+    class="trending"
+    style="display:none;"
+  >
 
-    <div id="listaTendencias" class="trending-list"></div>
+    <h2>🔥 Lo más pedido</h2>
+
+    <p>
+      Productos destacados de los pedidos registrados.
+    </p>
+
+    <div
+      id="listaTendencias"
+      class="trending-list"
+    ></div>
+
   </section>
 
-  <h2 class="section-title" id="tituloMenu">Nuestro menú</h2>
 
-  <div id="menu" class="menu"></div>
+  <h2
+    class="section-title"
+    id="tituloMenu"
+  >
+    Nuestro menú
+  </h2>
+
+
+  <div
+    id="menu"
+    class="menu"
+  ></div>
 
 </main>
 
-<!-- CARRITO FLOTANTE -->
 
-<div id="cartFloating" class="cart-floating" onclick="abrirCarrito()">
+<!-- =========================
+     CARRITO FLOTANTE
+========================= -->
+
+<div
+  id="cartFloating"
+  class="cart-floating"
+  onclick="abrirCarrito()"
+>
+
   <div>
-    <strong>🛒 Ver pedido</strong>
+
+    <strong>
+      🛒 Ver pedido
+    </strong>
+
     <br>
-    <small id="cartCount">0 artículos</small>
+
+    <small id="cartCount">
+      0 artículos
+    </small>
+
   </div>
 
-  <strong id="floatingTotal">RD$0</strong>
+  <strong id="floatingTotal">
+    RD$0
+  </strong>
+
 </div>
 
-<!-- MODAL CARRITO -->
 
-<div id="cartModal" class="modal" onclick="cerrarSiFondo(event)">
+<!-- =========================
+     MODAL CARRITO
+========================= -->
+
+<div
+  id="cartModal"
+  class="modal"
+  onclick="cerrarSiFondo(event)"
+>
 
   <div class="modal-content">
 
     <div class="modal-header">
-      <h2>🛒 Tu pedido</h2>
 
-      <button class="close-btn" onclick="cerrarCarrito()">
+      <h2>
+        🛒 Tu pedido
+      </h2>
+
+      <button
+        class="close-btn"
+        onclick="cerrarCarrito()"
+      >
         ✕
       </button>
+
     </div>
+
 
     <div id="listaCarrito"></div>
 
+
     <div class="total-box">
-      <span>Total</span>
-      <span id="totalCarrito">RD$0</span>
+
+      <span>
+        Total
+      </span>
+
+      <span id="totalCarrito">
+        RD$0
+      </span>
+
     </div>
 
-    <button class="confirm-btn" onclick="mostrarFormulario()">
+
+    <button
+      class="confirm-btn"
+      onclick="mostrarFormulario()"
+    >
       Continuar con el pedido
     </button>
 
   </div>
+
 </div>
 
-<!-- MODAL DATOS -->
 
-<div id="formModal" class="modal" onclick="cerrarSiFondo(event)">
+<!-- =========================
+     MODAL DATOS
+========================= -->
+
+<div
+  id="formModal"
+  class="modal"
+  onclick="cerrarSiFondo(event)"
+>
 
   <div class="modal-content">
 
     <div class="modal-header">
-      <h2>📦 Datos de entrega</h2>
 
-      <button class="close-btn" onclick="cerrarFormulario()">
+      <h2>
+        📦 Datos de entrega
+      </h2>
+
+      <button
+        class="close-btn"
+        onclick="cerrarFormulario()"
+      >
         ✕
       </button>
+
     </div>
 
-    <div class="form-group">
-      <label>Nombre *</label>
-      <input id="nombre" placeholder="Nombre completo">
-    </div>
 
     <div class="form-group">
-      <label>Teléfono *</label>
+
+      <label>
+        Nombre *
+      </label>
+
+      <input
+        id="nombre"
+        placeholder="Nombre completo"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>
+        Teléfono *
+      </label>
+
       <input
         id="telefono"
         type="tel"
         placeholder="809-000-0000"
       >
+
     </div>
 
+
     <div class="form-group">
-      <label>Dirección *</label>
+
+      <label>
+        Dirección *
+      </label>
+
       <textarea
         id="direccion"
         placeholder="Calle, número, sector..."
       ></textarea>
+
     </div>
 
+
     <div class="form-group">
-      <label>Referencia</label>
+
+      <label>
+        Referencia
+      </label>
+
       <input
         id="referencia"
         placeholder="Ej. Frente al parque, casa azul..."
       >
+
     </div>
 
+
     <div class="form-group">
-      <label>Notas adicionales</label>
+
+      <label>
+        Notas adicionales
+      </label>
+
       <textarea
         id="notas"
         placeholder="Ej. Sin cebolla, poca salsa, llamar al llegar..."
       ></textarea>
+
     </div>
+
 
     <div class="payment">
+
       💵 <strong>Método de pago</strong>
+
       <br>
+
       Contra entrega
+
     </div>
+
 
     <div class="total-box">
-      <span>Total</span>
-      <span id="formTotal">RD$0</span>
+
+      <span>
+        Total
+      </span>
+
+      <span id="formTotal">
+        RD$0
+      </span>
+
     </div>
 
-    <button class="confirm-btn" onclick="enviarPedido()">
+
+    <button
+      id="confirmarPedidoBtn"
+      class="confirm-btn"
+      onclick="enviarPedido()"
+    >
       📲 Confirmar pedido por WhatsApp
     </button>
 
   </div>
+
 </div>
 
+
 <footer>
+
   © 2026 CAF. DOBLE A
+
 </footer>
+
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://kziujqlhcxvlydscgwan.supabase.co";
-const SUPABASE_KEY = "sb_publishable_mYxG0eR_NXa1qlLSSab-nw_13f8CI6a";
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_URL =
+  "https://kziujqlhcxvlydscgwan.supabase.co";
 
-// AQUÍ CONTINÚA TODO EL CÓDIGO QUE YA TENÍAS
+const SUPABASE_KEY =
+  "sb_publishable_mYxG0eR_NXa1qlLSSab-nw_13f8CI6a";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
 
 /* =========================
    PRODUCTOS
@@ -807,6 +1051,15 @@ const productos = [
   },
 
   {
+    id: "chimi",
+    nombre: "Chimi",
+    precio: 200,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Chimi preparado al momento."
+  },
+
+  {
     id: "jugo",
     nombre: "Jugo",
     precio: 100,
@@ -876,7 +1129,8 @@ let carrito = [];
 
 function mostrarProductos(lista = productos) {
 
-  const menu = document.getElementById("menu");
+  const menu =
+    document.getElementById("menu");
 
   menu.innerHTML = "";
 
@@ -906,7 +1160,9 @@ function mostrarProductos(lista = productos) {
 
         <div class="producto-info">
 
-          <h3>${producto.nombre}</h3>
+          <h3>
+            ${producto.nombre}
+          </h3>
 
           <p class="descripcion">
             ${producto.descripcion}
@@ -928,21 +1184,25 @@ function mostrarProductos(lista = productos) {
       </article>
 
     `;
+
   });
+
 }
 
 
 /* =========================
-   AGREGAR
+   AGREGAR PRODUCTO
 ========================= */
 
 function agregarProducto(id, boton) {
 
-  const producto = productos.find(p => p.id === id);
+  const producto =
+    productos.find(p => p.id === id);
 
   if (!producto) return;
 
-  const existente = carrito.find(item => item.id === id);
+  const existente =
+    carrito.find(item => item.id === id);
 
   if (existente) {
 
@@ -951,60 +1211,90 @@ function agregarProducto(id, boton) {
   } else {
 
     carrito.push({
+
       id: producto.id,
+
       nombre: producto.nombre,
+
       precio: producto.precio,
+
       imagen: producto.imagen,
+
       cantidad: 1
+
     });
 
   }
 
-  animarAlCarrito(boton, producto.imagen);
+  animarAlCarrito(
+    boton,
+    producto.imagen
+  );
 
   mostrarCarrito();
+
 }
 
 
 /* =========================
-   ANIMACIÓN PRODUCTO
+   ANIMACIÓN
 ========================= */
 
 function animarAlCarrito(boton, imagen) {
 
-  const img = boton.closest(".producto").querySelector("img");
+  const img =
+    boton.closest(".producto")
+      .querySelector("img");
 
   if (!img) return;
 
-  const origen = img.getBoundingClientRect();
+  const origen =
+    img.getBoundingClientRect();
 
   const carritoFlotante =
-    document.getElementById("cartFloating");
+    document.getElementById(
+      "cartFloating"
+    );
 
   const destino =
     carritoFlotante.getBoundingClientRect();
 
-  const clon = document.createElement("img");
+  const clon =
+    document.createElement("img");
 
   clon.src = imagen;
 
-  clon.className = "flying-product";
+  clon.className =
+    "flying-product";
 
-  clon.style.left = origen.left + "px";
-  clon.style.top = origen.top + "px";
+  clon.style.left =
+    origen.left + "px";
+
+  clon.style.top =
+    origen.top + "px";
 
   document.body.appendChild(clon);
 
   requestAnimationFrame(() => {
 
     clon.style.left =
-      (destino.left + destino.width / 2 - 32) + "px";
+      (
+        destino.left +
+        destino.width / 2 -
+        32
+      ) + "px";
 
     clon.style.top =
-      (destino.top + destino.height / 2 - 32) + "px";
+      (
+        destino.top +
+        destino.height / 2 -
+        32
+      ) + "px";
 
     clon.style.width = "20px";
+
     clon.style.height = "20px";
+
     clon.style.opacity = "0";
 
   });
@@ -1013,13 +1303,18 @@ function animarAlCarrito(boton, imagen) {
 
     clon.remove();
 
-    carritoFlotante.classList.remove("cart-bounce");
+    carritoFlotante
+      .classList
+      .remove("cart-bounce");
 
     void carritoFlotante.offsetWidth;
 
-    carritoFlotante.classList.add("cart-bounce");
+    carritoFlotante
+      .classList
+      .add("cart-bounce");
 
   }, 600);
+
 }
 
 
@@ -1029,7 +1324,8 @@ function animarAlCarrito(boton, imagen) {
 
 function cambiarCantidad(id, cambio) {
 
-  const item = carrito.find(p => p.id === id);
+  const item =
+    carrito.find(p => p.id === id);
 
   if (!item) return;
 
@@ -1038,25 +1334,31 @@ function cambiarCantidad(id, cambio) {
   if (item.cantidad <= 0) {
 
     carrito =
-      carrito.filter(p => p.id !== id);
+      carrito.filter(
+        p => p.id !== id
+      );
 
   }
 
   mostrarCarrito();
+
 }
 
 
 /* =========================
-   CARRITO
+   CALCULAR TOTAL
 ========================= */
 
 function calcularTotal() {
 
   return carrito.reduce(
     (total, item) =>
-      total + item.precio * item.cantidad,
+      total +
+      item.precio *
+      item.cantidad,
     0
   );
+
 }
 
 
@@ -1064,16 +1366,24 @@ function calcularCantidadTotal() {
 
   return carrito.reduce(
     (total, item) =>
-      total + item.cantidad,
+      total +
+      item.cantidad,
     0
   );
+
 }
 
+
+/* =========================
+   MOSTRAR CARRITO
+========================= */
 
 function mostrarCarrito() {
 
   const lista =
-    document.getElementById("listaCarrito");
+    document.getElementById(
+      "listaCarrito"
+    );
 
   const total =
     calcularTotal();
@@ -1081,27 +1391,44 @@ function mostrarCarrito() {
   const cantidad =
     calcularCantidadTotal();
 
-  document.getElementById("totalCarrito").textContent =
+  document.getElementById(
+    "totalCarrito"
+  ).textContent =
     "RD$" + total;
 
-  document.getElementById("floatingTotal").textContent =
+  document.getElementById(
+    "floatingTotal"
+  ).textContent =
     "RD$" + total;
 
-  document.getElementById("cartCount").textContent =
+  document.getElementById(
+    "cartCount"
+  ).textContent =
     cantidad === 1
       ? "1 artículo"
       : cantidad + " artículos";
 
-  document.getElementById("formTotal").textContent =
+  document.getElementById(
+    "formTotal"
+  ).textContent =
     "RD$" + total;
 
   if (carrito.length === 0) {
 
     lista.innerHTML = `
+
       <div class="empty">
-        <h3>🛒 Tu pedido está vacío</h3>
-        <p>Agrega algo delicioso para comenzar.</p>
+
+        <h3>
+          🛒 Tu pedido está vacío
+        </h3>
+
+        <p>
+          Agrega algo delicioso para comenzar.
+        </p>
+
       </div>
+
     `;
 
     return;
@@ -1112,7 +1439,8 @@ function mostrarCarrito() {
   carrito.forEach(item => {
 
     const subtotal =
-      item.precio * item.cantidad;
+      item.precio *
+      item.cantidad;
 
     lista.innerHTML += `
 
@@ -1160,46 +1488,69 @@ function mostrarCarrito() {
       </div>
 
     `;
+
   });
-}
 
-
-function eliminarProducto(id) {
-
-  carrito =
-    carrito.filter(item => item.id !== id);
-
-  mostrarCarrito();
 }
 
 
 /* =========================
-   MODALES
+   ELIMINAR PRODUCTO
+========================= */
+
+function eliminarProducto(id) {
+
+  carrito =
+    carrito.filter(
+      item => item.id !== id
+    );
+
+  mostrarCarrito();
+
+}
+
+
+/* =========================
+   ABRIR CARRITO
 ========================= */
 
 function abrirCarrito() {
 
   document
     .getElementById("cartModal")
-    .classList.add("show");
+    .classList
+    .add("show");
 
   mostrarCarrito();
+
 }
 
+
+/* =========================
+   CERRAR CARRITO
+========================= */
 
 function cerrarCarrito() {
 
   document
     .getElementById("cartModal")
-    .classList.remove("show");
+    .classList
+    .remove("show");
+
 }
 
+
+/* =========================
+   MOSTRAR FORMULARIO
+========================= */
 
 function mostrarFormulario() {
 
   if (carrito.length === 0) {
 
-    alert("Agrega algún producto primero.");
+    alert(
+      "Agrega algún producto primero."
+    );
 
     return;
   }
@@ -1208,32 +1559,50 @@ function mostrarFormulario() {
 
   document
     .getElementById("formModal")
-    .classList.add("show");
+    .classList
+    .add("show");
 
   mostrarCarrito();
+
 }
 
+
+/* =========================
+   CERRAR FORMULARIO
+========================= */
 
 function cerrarFormulario() {
 
   document
     .getElementById("formModal")
-    .classList.remove("show");
-}
+    .classList
+    .remove("show");
 
-
-function cerrarSiFondo(event) {
-
-  if (event.target === event.currentTarget) {
-
-    event.currentTarget.classList.remove("show");
-
-  }
 }
 
 
 /* =========================
-   FILTROS
+   CERRAR AL TOCAR FONDO
+========================= */
+
+function cerrarSiFondo(event) {
+
+  if (
+    event.target ===
+    event.currentTarget
+  ) {
+
+    event.currentTarget
+      .classList
+      .remove("show");
+
+  }
+
+}
+
+
+/* =========================
+   BOTONES CATEGORÍAS
 ========================= */
 
 function activarBoton(boton) {
@@ -1245,12 +1614,22 @@ function activarBoton(boton) {
     );
 
   if (boton) {
+
     boton.classList.add("active");
+
   }
+
 }
 
 
-function filtrarCategoria(categoria, boton) {
+/* =========================
+   FILTRAR CATEGORÍA
+========================= */
+
+function filtrarCategoria(
+  categoria,
+  boton
+) {
 
   activarBoton(boton);
 
@@ -1258,7 +1637,9 @@ function filtrarCategoria(categoria, boton) {
     .getElementById("tendencias")
     .style.display = "none";
 
-  document.getElementById("tituloMenu").textContent =
+  document.getElementById(
+    "tituloMenu"
+  ).textContent =
     categoria === "Todos"
       ? "Nuestro menú"
       : categoria;
@@ -1271,7 +1652,8 @@ function filtrarCategoria(categoria, boton) {
 
     mostrarProductos(
       productos.filter(
-        p => p.categoria === categoria
+        p =>
+          p.categoria === categoria
       )
     );
 
@@ -1279,6 +1661,10 @@ function filtrarCategoria(categoria, boton) {
 
 }
 
+
+/* =========================
+   BUSCAR
+========================= */
 
 function buscarProductos() {
 
@@ -1295,17 +1681,36 @@ function buscarProductos() {
 
   const encontrados =
     productos.filter(p =>
-      p.nombre.toLowerCase().includes(texto) ||
-      p.descripcion.toLowerCase().includes(texto) ||
-      p.categoria.toLowerCase().includes(texto)
+
+      p.nombre
+        .toLowerCase()
+        .includes(texto)
+
+      ||
+
+      p.descripcion
+        .toLowerCase()
+        .includes(texto)
+
+      ||
+
+      p.categoria
+        .toLowerCase()
+        .includes(texto)
+
     );
 
-  document.getElementById("tituloMenu").textContent =
+  document.getElementById(
+    "tituloMenu"
+  ).textContent =
     texto
       ? "Resultados"
       : "Nuestro menú";
 
-  mostrarProductos(encontrados);
+  mostrarProductos(
+    encontrados
+  );
+
 }
 
 
@@ -1321,75 +1726,110 @@ function mostrarTendencias(boton) {
     .getElementById("tendencias")
     .style.display = "block";
 
-  document.getElementById("tituloMenu").textContent =
-    "Menú";
+  document.getElementById(
+    "tituloMenu"
+  ).textContent = "Menú";
+
+  /*
+    Por ahora las tendencias
+    utilizan los pedidos guardados
+    localmente.
+
+    Más adelante las conectaremos
+    directamente con los datos
+    centrales de Supabase.
+  */
 
   const ventas =
     JSON.parse(
-      localStorage.getItem("cafeteriaVentas") || "{}"
+      localStorage.getItem(
+        "cafeteriaVentas"
+      ) || "{}"
     );
 
   const ranking =
     Object.entries(ventas)
-      .sort((a, b) => b[1] - a[1])
+      .sort(
+        (a, b) =>
+          b[1] - a[1]
+      )
       .slice(0, 5);
 
   const lista =
-    document.getElementById("listaTendencias");
+    document.getElementById(
+      "listaTendencias"
+    );
 
   if (ranking.length === 0) {
 
     lista.innerHTML = `
+
       <div class="trend-item">
-        <span>🔥 Aún no hay suficientes pedidos registrados.</span>
+
+        <span>
+          🔥 Aún no hay suficientes pedidos registrados.
+        </span>
+
       </div>
+
     `;
 
   } else {
 
-    lista.innerHTML = ranking.map(
-      ([id, cantidad], index) => {
+    lista.innerHTML =
+      ranking.map(
+        ([id, cantidad], index) => {
 
-        const producto =
-          productos.find(p => p.id === id);
+          const producto =
+            productos.find(
+              p => p.id === id
+            );
 
-        if (!producto) return "";
+          if (!producto)
+            return "";
 
-        const medalla =
-          ["🥇", "🥈", "🥉"][index] || "🔥";
+          const medalla =
+            ["🥇", "🥈", "🥉"][index]
+            || "🔥";
 
-        return `
-          <div class="trend-item">
+          return `
 
-            <span>
-              ${medalla} ${producto.nombre}
-            </span>
+            <div class="trend-item">
 
-            <strong>
-              ${cantidad} vendidos
-            </strong>
+              <span>
+                ${medalla}
+                ${producto.nombre}
+              </span>
 
-          </div>
-        `;
+              <strong>
+                ${cantidad} vendidos
+              </strong>
 
-      }
-    ).join("");
+            </div>
+
+          `;
+
+        }
+      ).join("");
 
   }
 
   mostrarProductos(productos);
+
 }
 
 
 /* =========================
-   REGISTRAR VENTA LOCAL
+   REGISTRO LOCAL
 ========================= */
 
 function registrarVentaLocal() {
 
   const ventas =
     JSON.parse(
-      localStorage.getItem("cafeteriaVentas") || "{}"
+      localStorage.getItem(
+        "cafeteriaVentas"
+      ) || "{}"
     );
 
   carrito.forEach(item => {
@@ -1404,6 +1844,7 @@ function registrarVentaLocal() {
     "cafeteriaVentas",
     JSON.stringify(ventas)
   );
+
 }
 
 
@@ -1413,51 +1854,76 @@ function registrarVentaLocal() {
 
 function generarNumeroPedido() {
 
-  let numero =
-    parseInt(
-      localStorage.getItem("numeroPedido") || "1000"
-    );
+  /*
+    Generamos un identificador
+    único para mostrar al cliente.
 
-  numero++;
+    La información real del pedido
+    queda almacenada en Supabase.
+  */
 
-  localStorage.setItem(
-    "numeroPedido",
-    numero
-  );
+  const ahora =
+    Date.now()
+      .toString()
+      .slice(-8);
 
-  return numero;
+  return "AA-" + ahora;
+
 }
 
 
 /* =========================
-   ENVIAR WHATSAPP
+   ENVIAR PEDIDO
 ========================= */
 
-function enviarPedido() {
+async function enviarPedido() {
 
   if (carrito.length === 0) {
 
-    alert("Agrega algún producto primero.");
+    alert(
+      "Agrega algún producto primero."
+    );
 
     return;
   }
 
+
   const nombre =
-    document.getElementById("nombre").value.trim();
+    document
+      .getElementById("nombre")
+      .value
+      .trim();
 
   const telefono =
-    document.getElementById("telefono").value.trim();
+    document
+      .getElementById("telefono")
+      .value
+      .trim();
 
   const direccion =
-    document.getElementById("direccion").value.trim();
+    document
+      .getElementById("direccion")
+      .value
+      .trim();
 
   const referencia =
-    document.getElementById("referencia").value.trim();
+    document
+      .getElementById("referencia")
+      .value
+      .trim();
 
   const notas =
-    document.getElementById("notas").value.trim();
+    document
+      .getElementById("notas")
+      .value
+      .trim();
 
-  if (!nombre || !telefono || !direccion) {
+
+  if (
+    !nombre ||
+    !telefono ||
+    !direccion
+  ) {
 
     alert(
       "Completa tu nombre, teléfono y dirección."
@@ -1466,31 +1932,225 @@ function enviarPedido() {
     return;
   }
 
-  const pedido =
-    generarNumeroPedido();
 
   const total =
     calcularTotal();
+
+
+  const productosPedido =
+    carrito.map(item => ({
+
+      id: item.id,
+
+      nombre: item.nombre,
+
+      precio: item.precio,
+
+      cantidad: item.cantidad
+
+    }));
+
+
+  /*
+    Desactivar botón para evitar
+    pedidos duplicados por doble clic.
+  */
+
+  const boton =
+    document.getElementById(
+      "confirmarPedidoBtn"
+    );
+
+  boton.disabled = true;
+
+  boton.textContent =
+    "⏳ Registrando pedido...";
+
+
+  /*
+    Abrimos una ventana vacía antes
+    de la operación de Supabase para
+    evitar bloqueos del navegador
+    cuando posteriormente abramos
+    WhatsApp.
+  */
+
+  const ventanaWhatsApp =
+    window.open(
+      "about:blank",
+      "_blank"
+    );
+
+
+  /*
+    GUARDAR EN SUPABASE
+  */
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("orders")
+      .insert([{
+
+        customer_name:
+          nombre,
+
+        customer_phone:
+          telefono,
+
+        address:
+          direccion,
+
+        reference:
+          referencia || null,
+
+        notes:
+          notas || null,
+
+        payment_method:
+          "Contra entrega",
+
+        status:
+          "Nuevo",
+
+        total:
+          total,
+
+        items:
+          productosPedido
+
+      }]);
+
+
+  /*
+    SI SUPABASE FALLA
+  */
+
+  if (error) {
+
+    console.error(
+      "Error guardando pedido en Supabase:",
+      error
+    );
+
+    if (ventanaWhatsApp) {
+
+      ventanaWhatsApp.close();
+
+    }
+
+    boton.disabled = false;
+
+    boton.textContent =
+      "📲 Confirmar pedido por WhatsApp";
+
+    alert(
+      "❌ No pudimos registrar el pedido.\n\n" +
+      "No enviaremos el pedido por WhatsApp para evitar duplicados.\n\n" +
+      "Intenta nuevamente."
+    );
+
+    return;
+  }
+
+
+  /*
+    GENERAR NÚMERO DEL PEDIDO
+  */
+
+  const pedido =
+    generarNumeroPedido();
+
+
+  /*
+    REGISTRAR TENDENCIAS LOCALMENTE
+  */
+
+  registrarVentaLocal();
+
+
+  /*
+    GUARDAR COPIA LOCAL DEL PEDIDO
+  */
+
+  const pedidos =
+    JSON.parse(
+      localStorage.getItem(
+        "cafeteriaPedidos"
+      ) || "[]"
+    );
+
+
+  pedidos.push({
+
+    numeroPedido:
+      pedido,
+
+    fecha:
+      new Date().toISOString(),
+
+    cliente: {
+
+      nombre,
+
+      telefono,
+
+      direccion,
+
+      referencia,
+
+      notas
+
+    },
+
+    productos:
+      productosPedido,
+
+    total,
+
+    pago:
+      "Contra entrega",
+
+    estado:
+      "Nuevo"
+
+  });
+
+
+  localStorage.setItem(
+    "cafeteriaPedidos",
+    JSON.stringify(pedidos)
+  );
+
+
+  /*
+    CREAR MENSAJE WHATSAPP
+  */
 
   let mensaje =
     "🔔 *NUEVO PEDIDO #" +
     pedido +
     "*\n\n";
 
+
   mensaje +=
     "👤 *CLIENTE*\n" +
     nombre +
     "\n";
+
 
   mensaje +=
     "📱 *TELÉFONO*\n" +
     telefono +
     "\n\n";
 
+
   mensaje +=
     "📍 *DIRECCIÓN*\n" +
     direccion +
     "\n";
+
 
   if (referencia) {
 
@@ -1501,12 +2161,16 @@ function enviarPedido() {
 
   }
 
-  mensaje += "\n🍔 *PEDIDO*\n";
+
+  mensaje +=
+    "\n🍔 *PEDIDO*\n";
+
 
   carrito.forEach(item => {
 
     const subtotal =
-      item.precio * item.cantidad;
+      item.precio *
+      item.cantidad;
 
     mensaje +=
       "• " +
@@ -1519,6 +2183,7 @@ function enviarPedido() {
 
   });
 
+
   if (notas) {
 
     mensaje +=
@@ -1528,90 +2193,114 @@ function enviarPedido() {
 
   }
 
+
   mensaje +=
     "\n💰 *TOTAL: RD$" +
     total +
     "*\n";
 
+
   mensaje +=
     "💵 *PAGO: CONTRA ENTREGA*\n";
+
 
   mensaje +=
     "\n🟡 *ESTADO: NUEVO*";
 
-  /* Guardamos una copia local mientras
-     conectamos la base de datos */
 
-  registrarVentaLocal();
-
-  const pedidos =
-    JSON.parse(
-      localStorage.getItem("cafeteriaPedidos") || "[]"
-    );
-
-  pedidos.push({
-
-    numeroPedido: pedido,
-
-    fecha: new Date().toISOString(),
-
-    cliente: {
-      nombre,
-      telefono,
-      direccion,
-      referencia,
-      notas
-    },
-
-    productos: carrito.map(item => ({
-      id: item.id,
-      nombre: item.nombre,
-      precio: item.precio,
-      cantidad: item.cantidad
-    })),
-
-    total,
-
-    pago: "Contra entrega",
-
-    estado: "Nuevo"
-
-  });
-
-  localStorage.setItem(
-    "cafeteriaPedidos",
-    JSON.stringify(pedidos)
-  );
+  /*
+    NÚMERO DE WHATSAPP
+  */
 
   const numero =
     "18098142865";
+
 
   const url =
     "https://wa.me/" +
     numero +
     "?text=" +
-    encodeURIComponent(mensaje);
+    encodeURIComponent(
+      mensaje
+    );
 
-  window.open(url, "_blank");
 
-  /* Limpiar carrito después del envío */
+  /*
+    ABRIR WHATSAPP
+  */
+
+  if (ventanaWhatsApp) {
+
+    ventanaWhatsApp.location.href =
+      url;
+
+  } else {
+
+    window.location.href =
+      url;
+
+  }
+
+
+  /*
+    LIMPIAR CARRITO
+  */
 
   carrito = [];
 
+
   mostrarCarrito();
+
 
   cerrarFormulario();
 
+
+  /*
+    LIMPIAR FORMULARIO
+  */
+
+  document.getElementById(
+    "nombre"
+  ).value = "";
+
+  document.getElementById(
+    "telefono"
+  ).value = "";
+
+  document.getElementById(
+    "direccion"
+  ).value = "";
+
+  document.getElementById(
+    "referencia"
+  ).value = "";
+
+  document.getElementById(
+    "notas"
+  ).value = "";
+
+
+  /*
+    RESTAURAR BOTÓN
+  */
+
+  boton.disabled = false;
+
+  boton.textContent =
+    "📲 Confirmar pedido por WhatsApp";
+
+
   alert(
-    "Pedido #" +
+    "✅ Pedido #" +
     pedido +
-    " preparado correctamente."
+    " registrado correctamente."
   );
+
 }
 
 
 /* =========================
-   INICIAR
+   INICIAR PÁGINA
 ========================= */
 
 mostrarProductos();
