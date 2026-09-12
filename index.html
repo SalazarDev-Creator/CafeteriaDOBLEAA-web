@@ -1,318 +1,1612 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cafetería</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>CAF. DOBLE A | Pedidos</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    header {
-      background: #111;
-      color: white;
-      padding: 25px 15px;
-      text-align: center;
-    }
+:root {
+  --primary: #111;
+  --accent: #f5a623;
+  --green: #25d366;
+  --bg: #f6f6f6;
+  --card: #fff;
+  --text: #171717;
+  --muted: #777;
+  --danger: #e53935;
+}
 
-    header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: 90px;
+}
 
-    header p {
-      color: #ddd;
-    }
+button,
+input,
+textarea {
+  font-family: inherit;
+}
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-    }
+/* HEADER */
 
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
+header {
+  background: #111;
+  color: white;
+  padding: 22px 16px 18px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
 
-    .producto {
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 3px 12px rgba(0,0,0,.1);
-    }
+header h1 {
+  font-size: 27px;
+  margin-bottom: 5px;
+}
 
-    .producto img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: #ddd;
-    }
+header p {
+  color: #ddd;
+  font-size: 14px;
+}
 
-    .producto-info {
-      padding: 15px;
-    }
+/* BUSCADOR */
 
-    .producto h3 {
-      margin-bottom: 7px;
-    }
+.search-box {
+  max-width: 900px;
+  margin: 15px auto 0;
+}
 
-    .precio {
-      font-size: 20px;
-      font-weight: bold;
-      margin: 10px 0;
-    }
+.search-box input {
+  width: 100%;
+  border: none;
+  padding: 13px 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: #111;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
+/* CATEGORÍAS */
 
-    button:hover {
-      opacity: .85;
-    }
+.categories {
+  position: sticky;
+  top: 94px;
+  z-index: 40;
+  background: rgba(246,246,246,.97);
+  padding: 12px 12px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
 
-    .carrito {
-      margin-top: 30px;
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.1);
-    }
+.categories::-webkit-scrollbar {
+  display: none;
+}
 
-    .carrito h2 {
-      margin-bottom: 15px;
-    }
+.category-btn {
+  width: auto;
+  display: inline-block;
+  padding: 10px 15px;
+  margin-right: 7px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #222;
+  font-size: 14px;
+}
 
-    #listaCarrito div {
-      padding: 8px 0;
-      border-bottom: 1px solid #ddd;
-    }
+.category-btn.active {
+  background: #111;
+  color: white;
+  border-color: #111;
+}
 
-    .total {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 20px 0;
-    }
+/* CONTENEDOR */
 
-    .pedido {
-      margin-top: 15px;
-    }
+.container {
+  width: min(1100px, 100%);
+  margin: auto;
+  padding: 16px;
+}
 
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 7px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+.section-title {
+  margin: 15px 0;
+  font-size: 22px;
+}
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #777;
-    }
-  </style>
+/* PRODUCTOS */
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.producto {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 3px 14px rgba(0,0,0,.08);
+  position: relative;
+  transition: transform .18s ease;
+}
+
+.producto:hover {
+  transform: translateY(-2px);
+}
+
+.producto img {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+  display: block;
+  background: #ddd;
+}
+
+.producto-info {
+  padding: 15px;
+}
+
+.producto h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.descripcion {
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 38px;
+  line-height: 1.4;
+}
+
+.precio {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.add-btn {
+  background: #111;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.add-btn:active {
+  transform: scale(.96);
+}
+
+/* TENDENCIAS */
+
+.trending {
+  background: linear-gradient(135deg, #111, #272727);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin: 18px 0;
+}
+
+.trending h2 {
+  margin-bottom: 5px;
+}
+
+.trending p {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.trending-list {
+  margin-top: 15px;
+  display: grid;
+  gap: 8px;
+}
+
+.trend-item {
+  background: rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CARRITO FLOTANTE */
+
+.cart-floating {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(94%, 500px);
+  background: #111;
+  color: white;
+  border-radius: 16px;
+  padding: 13px 15px;
+  z-index: 100;
+  box-shadow: 0 8px 30px rgba(0,0,0,.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-floating strong {
+  font-size: 16px;
+}
+
+.cart-floating small {
+  color: #ccc;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.58);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  width: min(650px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 22px 22px 0 0;
+  padding: 20px;
+  animation: slideUp .25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.close-btn {
+  width: auto;
+  background: #eee;
+  color: #111;
+  padding: 8px 12px;
+}
+
+/* ITEMS CARRITO */
+
+.cart-item {
+  padding: 13px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cart-name {
+  font-weight: bold;
+}
+
+.cart-price {
+  font-weight: bold;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.quantity-controls button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+}
+
+.quantity {
+  min-width: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.remove-btn {
+  margin-left: auto;
+  background: #eee !important;
+  color: #c62828 !important;
+}
+
+.total-box {
+  padding: 18px 0;
+  font-size: 23px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* FORMULARIO */
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+.payment {
+  background: #f5f5f5;
+  padding: 13px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.confirm-btn {
+  background: var(--green);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+/* ANIMACIÓN */
+
+.flying-product {
+  position: fixed;
+  z-index: 999;
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 12px;
+  pointer-events: none;
+  transition:
+    left .55s cubic-bezier(.2,.8,.2,1),
+    top .55s cubic-bezier(.2,.8,.2,1),
+    width .55s,
+    height .55s,
+    opacity .55s;
+  box-shadow: 0 8px 25px rgba(0,0,0,.25);
+}
+
+.cart-bounce {
+  animation: cartBounce .45s ease;
+}
+
+@keyframes cartBounce {
+  0% { transform: translateX(-50%) scale(1); }
+  40% { transform: translateX(-50%) scale(1.08); }
+  70% { transform: translateX(-50%) scale(.96); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* VACÍO */
+
+.empty {
+  text-align: center;
+  padding: 30px 10px;
+  color: #777;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+  padding: 35px 20px;
+  color: #777;
+  font-size: 14px;
+}
+
+/* DESKTOP */
+
+@media (min-width: 700px) {
+  .modal {
+    align-items: center;
+  }
+
+  .modal-content {
+    border-radius: 20px;
+    max-height: 90vh;
+  }
+
+  .cart-floating {
+    left: auto;
+    right: 25px;
+    transform: none;
+    width: 330px;
+  }
+
+  .cart-bounce {
+    animation-name: cartBounceDesktop;
+  }
+
+  @keyframes cartBounceDesktop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.08); }
+    70% { transform: scale(.96); }
+    100% { transform: scale(1); }
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>🍔 Mi Cafetería</h1>
-  <p>Yaroa • Chimi • Hamburguesas • Más</p>
+  <h1>🍔 CAF. DOBLE A</h1>
+  <p>Comida • Jugos • Refrescos • Más</p>
+
+  <div class="search-box">
+    <input
+      id="buscador"
+      type="search"
+      placeholder="🔎 Buscar en el menú..."
+      oninput="buscarProductos()"
+    >
+  </div>
 </header>
 
-<div class="container">
+<nav class="categories">
+  <button class="category-btn active" onclick="filtrarCategoria('Todos', this)">
+    Todos
+  </button>
 
-  <h2 style="margin-bottom:20px;">Nuestro menú</h2>
+  <button class="category-btn" onclick="mostrarTendencias(this)">
+    🔥 Tendencias
+  </button>
 
-  <div class="menu">
+  <button class="category-btn" onclick="filtrarCategoria('Comida', this)">
+    🍔 Comida
+  </button>
 
-    <div class="producto">
-      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80">
-      <div class="producto-info">
-        <h3>Yaroa</h3>
-        <p>Deliciosa yaroa preparada al momento.</p>
-        <div class="precio">RD$250</div>
-        <button onclick="agregar('Yaroa',250)">Agregar al pedido</button>
-      </div>
-    </div>
+  <button class="category-btn" onclick="filtrarCategoria('Cerveza', this)">
+    🍺 Cervezas
+  </button>
 
-    <div class="producto">
-      <img src="https://images.unsplash.com/photo-1612392062631-94dd858cba88?auto=format&fit=crop&w=800&q=80">
-      <div class="producto-info">
-        <h3>Chimi</h3>
-        <p>Chimi dominicano con todos sus ingredientes.</p>
-        <div class="precio">RD$200</div>
-        <button onclick="agregar('Chimi',200)">Agregar al pedido</button>
-      </div>
-    </div>
+  <button class="category-btn" onclick="filtrarCategoria('Jugos', this)">
+    🥤 Jugos
+  </button>
 
-    <div class="producto">
-      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80">
-      <div class="producto-info">
-        <h3>Hamburguesa</h3>
-        <p>Hamburguesa preparada al momento.</p>
-        <div class="precio">RD$300</div>
-        <button onclick="agregar('Hamburguesa',300)">Agregar al pedido</button>
-      </div>
-    </div>
+  <button class="category-btn" onclick="filtrarCategoria('Refresco', this)">
+    🥤 Refrescos
+  </button>
+</nav>
 
+<main class="container">
+
+  <section id="tendencias" class="trending" style="display:none;">
+    <h2>🔥 Lo más pedido</h2>
+    <p>Productos destacados de los pedidos registrados.</p>
+
+    <div id="listaTendencias" class="trending-list"></div>
+  </section>
+
+  <h2 class="section-title" id="tituloMenu">Nuestro menú</h2>
+
+  <div id="menu" class="menu"></div>
+
+</main>
+
+<!-- CARRITO FLOTANTE -->
+
+<div id="cartFloating" class="cart-floating" onclick="abrirCarrito()">
+  <div>
+    <strong>🛒 Ver pedido</strong>
+    <br>
+    <small id="cartCount">0 artículos</small>
   </div>
 
-  <div class="carrito">
+  <strong id="floatingTotal">RD$0</strong>
+</div>
 
-    <h2>🛒 Tu pedido</h2>
+<!-- MODAL CARRITO -->
 
-    <div id="listaCarrito">
-      <p>No has agregado productos.</p>
-    </div>
+<div id="cartModal" class="modal" onclick="cerrarSiFondo(event)">
 
-    <div class="total">
-      Total: RD$<span id="total">0</span>
-    </div>
+  <div class="modal-content">
 
-    <div class="pedido">
+    <div class="modal-header">
+      <h2>🛒 Tu pedido</h2>
 
-      <h3>Datos para la entrega</h3>
-
-      <input id="nombre" placeholder="Tu nombre">
-
-      <input id="telefono" placeholder="Tu teléfono">
-
-      <textarea id="direccion" placeholder="Dirección de entrega"></textarea>
-
-      <button onclick="enviarPedido()">
-        📲 Realizar pedido
+      <button class="close-btn" onclick="cerrarCarrito()">
+        ✕
       </button>
-
     </div>
 
-  </div>
+    <div id="listaCarrito"></div>
 
+    <div class="total-box">
+      <span>Total</span>
+      <span id="totalCarrito">RD$0</span>
+    </div>
+
+    <button class="confirm-btn" onclick="mostrarFormulario()">
+      Continuar con el pedido
+    </button>
+
+  </div>
+</div>
+
+<!-- MODAL DATOS -->
+
+<div id="formModal" class="modal" onclick="cerrarSiFondo(event)">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>📦 Datos de entrega</h2>
+
+      <button class="close-btn" onclick="cerrarFormulario()">
+        ✕
+      </button>
+    </div>
+
+    <div class="form-group">
+      <label>Nombre *</label>
+      <input id="nombre" placeholder="Nombre completo">
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono *</label>
+      <input
+        id="telefono"
+        type="tel"
+        placeholder="809-000-0000"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Dirección *</label>
+      <textarea
+        id="direccion"
+        placeholder="Calle, número, sector..."
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Referencia</label>
+      <input
+        id="referencia"
+        placeholder="Ej. Frente al parque, casa azul..."
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Notas adicionales</label>
+      <textarea
+        id="notas"
+        placeholder="Ej. Sin cebolla, poca salsa, llamar al llegar..."
+      ></textarea>
+    </div>
+
+    <div class="payment">
+      💵 <strong>Método de pago</strong>
+      <br>
+      Contra entrega
+    </div>
+
+    <div class="total-box">
+      <span>Total</span>
+      <span id="formTotal">RD$0</span>
+    </div>
+
+    <button class="confirm-btn" onclick="enviarPedido()">
+      📲 Confirmar pedido por WhatsApp
+    </button>
+
+  </div>
 </div>
 
 <footer>
-  © 2026 Mi Cafetería
+  © 2026 CAF. DOBLE A
 </footer>
 
 <script>
 
+/* =========================
+   PRODUCTOS
+========================= */
+
+const productos = [
+
+  {
+    id: "presidente-mediana",
+    nombre: "Cerveza Presidente Mediana",
+    precio: 200,
+    categoria: "Cerveza",
+    imagen: "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Presidente Mediana."
+  },
+
+  {
+    id: "presidente-pequena",
+    nombre: "Cerveza Presidente Pequeña",
+    precio: 150,
+    categoria: "Cerveza",
+    imagen: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Presidente Pequeña."
+  },
+
+  {
+    id: "corona",
+    nombre: "Cerveza Corona",
+    precio: 175,
+    categoria: "Cerveza",
+    imagen: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Cerveza Corona."
+  },
+
+  {
+    id: "alitas",
+    nombre: "Alitas picante",
+    precio: 250,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Alitas picantes preparadas al momento."
+  },
+
+  {
+    id: "club-sandwich",
+    nombre: "Club Sandwich",
+    precio: 250,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1553909489-cd47e0907980?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Club Sandwich preparado al momento."
+  },
+
+  {
+    id: "hamburguesa-pollo",
+    nombre: "Hamburguesa de pollo",
+    precio: 250,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Hamburguesa de pollo."
+  },
+
+  {
+    id: "hamburguesa-res",
+    nombre: "Hamburguesa de res",
+    precio: 250,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Hamburguesa de res."
+  },
+
+  {
+    id: "pechuga-plancha",
+    nombre: "Pechuga a la plancha",
+    precio: 300,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Pechuga preparada a la plancha."
+  },
+
+  {
+    id: "pechuga-crema",
+    nombre: "Pechugas a la crema",
+    precio: 250,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Pechugas en salsa cremosa."
+  },
+
+  {
+    id: "quesadilla",
+    nombre: "Quesadilla",
+    precio: 250,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Quesadilla preparada al momento."
+  },
+
+  {
+    id: "salchi-papa",
+    nombre: "Salchi papa",
+    precio: 150,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Papas con salchicha."
+  },
+
+  {
+    id: "sandwich",
+    nombre: "Sandwich",
+    precio: 175,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Sandwich preparado al momento."
+  },
+
+  {
+    id: "taco-pollo",
+    nombre: "Taco de pollo",
+    precio: 150,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Taco de pollo."
+  },
+
+  {
+    id: "taco-res",
+    nombre: "Taco de res",
+    precio: 150,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Taco de res."
+  },
+
+  {
+    id: "yaroa",
+    nombre: "Yaroa",
+    precio: 200,
+    categoria: "Comida",
+    imagen: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Yaroa preparada al momento."
+  },
+
+  {
+    id: "jugo",
+    nombre: "Jugo",
+    precio: 100,
+    categoria: "Jugos",
+    imagen: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Jugo natural."
+  },
+
+  {
+    id: "chinola",
+    nombre: "Jugo de chinola",
+    precio: 100,
+    categoria: "Jugos",
+    imagen: "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Jugo de chinola."
+  },
+
+  {
+    id: "fresa",
+    nombre: "Jugo de fresa",
+    precio: 100,
+    categoria: "Jugos",
+    imagen: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Jugo de fresa."
+  },
+
+  {
+    id: "limon",
+    nombre: "Jugo de limón",
+    precio: 100,
+    categoria: "Jugos",
+    imagen: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Jugo de limón."
+  },
+
+  {
+    id: "pina",
+    nombre: "Jugo de piña",
+    precio: 100,
+    categoria: "Jugos",
+    imagen: "https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Jugo de piña."
+  },
+
+  {
+    id: "cocacola",
+    nombre: "Coca-Cola",
+    precio: 40,
+    categoria: "Refresco",
+    imagen: "https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=800&q=80",
+    descripcion: "Coca-Cola."
+  }
+
+];
+
+
+/* =========================
+   CARRITO
+========================= */
+
 let carrito = [];
 
-function agregar(nombre, precio) {
 
-  carrito.push({
-    nombre: nombre,
-    precio: precio
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
+
+function mostrarProductos(lista = productos) {
+
+  const menu = document.getElementById("menu");
+
+  menu.innerHTML = "";
+
+  if (lista.length === 0) {
+
+    menu.innerHTML = `
+      <div class="empty">
+        <h3>No encontramos productos</h3>
+        <p>Prueba con otro nombre.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  lista.forEach(producto => {
+
+    menu.innerHTML += `
+
+      <article class="producto">
+
+        <img
+          src="${producto.imagen}"
+          alt="${producto.nombre}"
+          loading="lazy"
+        >
+
+        <div class="producto-info">
+
+          <h3>${producto.nombre}</h3>
+
+          <p class="descripcion">
+            ${producto.descripcion}
+          </p>
+
+          <div class="precio">
+            RD$${producto.precio}
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="agregarProducto('${producto.id}', this)"
+          >
+            Agregar al pedido
+          </button>
+
+        </div>
+
+      </article>
+
+    `;
   });
+}
+
+
+/* =========================
+   AGREGAR
+========================= */
+
+function agregarProducto(id, boton) {
+
+  const producto = productos.find(p => p.id === id);
+
+  if (!producto) return;
+
+  const existente = carrito.find(item => item.id === id);
+
+  if (existente) {
+
+    existente.cantidad++;
+
+  } else {
+
+    carrito.push({
+      id: producto.id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      imagen: producto.imagen,
+      cantidad: 1
+    });
+
+  }
+
+  animarAlCarrito(boton, producto.imagen);
 
   mostrarCarrito();
 }
 
+
+/* =========================
+   ANIMACIÓN PRODUCTO
+========================= */
+
+function animarAlCarrito(boton, imagen) {
+
+  const img = boton.closest(".producto").querySelector("img");
+
+  if (!img) return;
+
+  const origen = img.getBoundingClientRect();
+
+  const carritoFlotante =
+    document.getElementById("cartFloating");
+
+  const destino =
+    carritoFlotante.getBoundingClientRect();
+
+  const clon = document.createElement("img");
+
+  clon.src = imagen;
+
+  clon.className = "flying-product";
+
+  clon.style.left = origen.left + "px";
+  clon.style.top = origen.top + "px";
+
+  document.body.appendChild(clon);
+
+  requestAnimationFrame(() => {
+
+    clon.style.left =
+      (destino.left + destino.width / 2 - 32) + "px";
+
+    clon.style.top =
+      (destino.top + destino.height / 2 - 32) + "px";
+
+    clon.style.width = "20px";
+    clon.style.height = "20px";
+    clon.style.opacity = "0";
+
+  });
+
+  setTimeout(() => {
+
+    clon.remove();
+
+    carritoFlotante.classList.remove("cart-bounce");
+
+    void carritoFlotante.offsetWidth;
+
+    carritoFlotante.classList.add("cart-bounce");
+
+  }, 600);
+}
+
+
+/* =========================
+   CAMBIAR CANTIDAD
+========================= */
+
+function cambiarCantidad(id, cambio) {
+
+  const item = carrito.find(p => p.id === id);
+
+  if (!item) return;
+
+  item.cantidad += cambio;
+
+  if (item.cantidad <= 0) {
+
+    carrito =
+      carrito.filter(p => p.id !== id);
+
+  }
+
+  mostrarCarrito();
+}
+
+
+/* =========================
+   CARRITO
+========================= */
+
+function calcularTotal() {
+
+  return carrito.reduce(
+    (total, item) =>
+      total + item.precio * item.cantidad,
+    0
+  );
+}
+
+
+function calcularCantidadTotal() {
+
+  return carrito.reduce(
+    (total, item) =>
+      total + item.cantidad,
+    0
+  );
+}
+
+
 function mostrarCarrito() {
 
-  const lista = document.getElementById("listaCarrito");
+  const lista =
+    document.getElementById("listaCarrito");
+
+  const total =
+    calcularTotal();
+
+  const cantidad =
+    calcularCantidadTotal();
+
+  document.getElementById("totalCarrito").textContent =
+    "RD$" + total;
+
+  document.getElementById("floatingTotal").textContent =
+    "RD$" + total;
+
+  document.getElementById("cartCount").textContent =
+    cantidad === 1
+      ? "1 artículo"
+      : cantidad + " artículos";
+
+  document.getElementById("formTotal").textContent =
+    "RD$" + total;
 
   if (carrito.length === 0) {
-    lista.innerHTML = "<p>No has agregado productos.</p>";
-    document.getElementById("total").textContent = "0";
+
+    lista.innerHTML = `
+      <div class="empty">
+        <h3>🛒 Tu pedido está vacío</h3>
+        <p>Agrega algo delicioso para comenzar.</p>
+      </div>
+    `;
+
     return;
   }
 
   lista.innerHTML = "";
 
-  let total = 0;
+  carrito.forEach(item => {
 
-  carrito.forEach((producto, index) => {
-
-    total += producto.precio;
+    const subtotal =
+      item.precio * item.cantidad;
 
     lista.innerHTML += `
-      <div>
-        ${producto.nombre} — RD$${producto.precio}
-        <button
-          style="width:auto; padding:5px 10px; float:right;"
-          onclick="eliminar(${index})">
-          ❌
-        </button>
+
+      <div class="cart-item">
+
+        <div class="cart-row">
+
+          <span class="cart-name">
+            ${item.nombre}
+          </span>
+
+          <span class="cart-price">
+            RD$${subtotal}
+          </span>
+
+        </div>
+
+        <div class="quantity-controls">
+
+          <button
+            onclick="cambiarCantidad('${item.id}', -1)"
+          >
+            −
+          </button>
+
+          <span class="quantity">
+            ${item.cantidad}
+          </span>
+
+          <button
+            onclick="cambiarCantidad('${item.id}', 1)"
+          >
+            +
+          </button>
+
+          <button
+            class="remove-btn"
+            onclick="eliminarProducto('${item.id}')"
+          >
+            🗑️
+          </button>
+
+        </div>
+
       </div>
+
     `;
   });
-
-  document.getElementById("total").textContent = total;
 }
 
-function eliminar(index) {
 
-  carrito.splice(index, 1);
+function eliminarProducto(id) {
+
+  carrito =
+    carrito.filter(item => item.id !== id);
 
   mostrarCarrito();
 }
 
+
+/* =========================
+   MODALES
+========================= */
+
+function abrirCarrito() {
+
+  document
+    .getElementById("cartModal")
+    .classList.add("show");
+
+  mostrarCarrito();
+}
+
+
+function cerrarCarrito() {
+
+  document
+    .getElementById("cartModal")
+    .classList.remove("show");
+}
+
+
+function mostrarFormulario() {
+
+  if (carrito.length === 0) {
+
+    alert("Agrega algún producto primero.");
+
+    return;
+  }
+
+  cerrarCarrito();
+
+  document
+    .getElementById("formModal")
+    .classList.add("show");
+
+  mostrarCarrito();
+}
+
+
+function cerrarFormulario() {
+
+  document
+    .getElementById("formModal")
+    .classList.remove("show");
+}
+
+
+function cerrarSiFondo(event) {
+
+  if (event.target === event.currentTarget) {
+
+    event.currentTarget.classList.remove("show");
+
+  }
+}
+
+
+/* =========================
+   FILTROS
+========================= */
+
+function activarBoton(boton) {
+
+  document
+    .querySelectorAll(".category-btn")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  if (boton) {
+    boton.classList.add("active");
+  }
+}
+
+
+function filtrarCategoria(categoria, boton) {
+
+  activarBoton(boton);
+
+  document
+    .getElementById("tendencias")
+    .style.display = "none";
+
+  document.getElementById("tituloMenu").textContent =
+    categoria === "Todos"
+      ? "Nuestro menú"
+      : categoria;
+
+  if (categoria === "Todos") {
+
+    mostrarProductos(productos);
+
+  } else {
+
+    mostrarProductos(
+      productos.filter(
+        p => p.categoria === categoria
+      )
+    );
+
+  }
+
+}
+
+
+function buscarProductos() {
+
+  const texto =
+    document
+      .getElementById("buscador")
+      .value
+      .toLowerCase()
+      .trim();
+
+  document
+    .getElementById("tendencias")
+    .style.display = "none";
+
+  const encontrados =
+    productos.filter(p =>
+      p.nombre.toLowerCase().includes(texto) ||
+      p.descripcion.toLowerCase().includes(texto) ||
+      p.categoria.toLowerCase().includes(texto)
+    );
+
+  document.getElementById("tituloMenu").textContent =
+    texto
+      ? "Resultados"
+      : "Nuestro menú";
+
+  mostrarProductos(encontrados);
+}
+
+
+/* =========================
+   TENDENCIAS
+========================= */
+
+function mostrarTendencias(boton) {
+
+  activarBoton(boton);
+
+  document
+    .getElementById("tendencias")
+    .style.display = "block";
+
+  document.getElementById("tituloMenu").textContent =
+    "Menú";
+
+  const ventas =
+    JSON.parse(
+      localStorage.getItem("cafeteriaVentas") || "{}"
+    );
+
+  const ranking =
+    Object.entries(ventas)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+
+  const lista =
+    document.getElementById("listaTendencias");
+
+  if (ranking.length === 0) {
+
+    lista.innerHTML = `
+      <div class="trend-item">
+        <span>🔥 Aún no hay suficientes pedidos registrados.</span>
+      </div>
+    `;
+
+  } else {
+
+    lista.innerHTML = ranking.map(
+      ([id, cantidad], index) => {
+
+        const producto =
+          productos.find(p => p.id === id);
+
+        if (!producto) return "";
+
+        const medalla =
+          ["🥇", "🥈", "🥉"][index] || "🔥";
+
+        return `
+          <div class="trend-item">
+
+            <span>
+              ${medalla} ${producto.nombre}
+            </span>
+
+            <strong>
+              ${cantidad} vendidos
+            </strong>
+
+          </div>
+        `;
+
+      }
+    ).join("");
+
+  }
+
+  mostrarProductos(productos);
+}
+
+
+/* =========================
+   REGISTRAR VENTA LOCAL
+========================= */
+
+function registrarVentaLocal() {
+
+  const ventas =
+    JSON.parse(
+      localStorage.getItem("cafeteriaVentas") || "{}"
+    );
+
+  carrito.forEach(item => {
+
+    ventas[item.id] =
+      (ventas[item.id] || 0) +
+      item.cantidad;
+
+  });
+
+  localStorage.setItem(
+    "cafeteriaVentas",
+    JSON.stringify(ventas)
+  );
+}
+
+
+/* =========================
+   NÚMERO DE PEDIDO
+========================= */
+
+function generarNumeroPedido() {
+
+  let numero =
+    parseInt(
+      localStorage.getItem("numeroPedido") || "1000"
+    );
+
+  numero++;
+
+  localStorage.setItem(
+    "numeroPedido",
+    numero
+  );
+
+  return numero;
+}
+
+
+/* =========================
+   ENVIAR WHATSAPP
+========================= */
+
 function enviarPedido() {
 
   if (carrito.length === 0) {
+
     alert("Agrega algún producto primero.");
+
     return;
   }
 
-  const nombre = document.getElementById("nombre").value;
-  const telefono = document.getElementById("telefono").value;
-  const direccion = document.getElementById("direccion").value;
+  const nombre =
+    document.getElementById("nombre").value.trim();
+
+  const telefono =
+    document.getElementById("telefono").value.trim();
+
+  const direccion =
+    document.getElementById("direccion").value.trim();
+
+  const referencia =
+    document.getElementById("referencia").value.trim();
+
+  const notas =
+    document.getElementById("notas").value.trim();
 
   if (!nombre || !telefono || !direccion) {
-    alert("Completa tus datos de entrega.");
+
+    alert(
+      "Completa tu nombre, teléfono y dirección."
+    );
+
     return;
   }
 
-  let mensaje = "🛵 NUEVO PEDIDO%0A%0A";
+  const pedido =
+    generarNumeroPedido();
 
-  mensaje += "👤 Nombre: " + nombre + "%0A";
-  mensaje += "📱 Teléfono: " + telefono + "%0A";
-  mensaje += "📍 Dirección: " + direccion + "%0A%0A";
+  const total =
+    calcularTotal();
 
-  mensaje += "🍔 PEDIDO:%0A";
+  let mensaje =
+    "🔔 *NUEVO PEDIDO #" +
+    pedido +
+    "*\n\n";
 
-  let total = 0;
+  mensaje +=
+    "👤 *CLIENTE*\n" +
+    nombre +
+    "\n";
 
-  carrito.forEach(producto => {
+  mensaje +=
+    "📱 *TELÉFONO*\n" +
+    telefono +
+    "\n\n";
 
-    mensaje += "• " + producto.nombre +
-      " — RD$" + producto.precio + "%0A";
+  mensaje +=
+    "📍 *DIRECCIÓN*\n" +
+    direccion +
+    "\n";
 
-    total += producto.precio;
+  if (referencia) {
+
+    mensaje +=
+      "🧭 *REFERENCIA*\n" +
+      referencia +
+      "\n";
+
+  }
+
+  mensaje += "\n🍔 *PEDIDO*\n";
+
+  carrito.forEach(item => {
+
+    const subtotal =
+      item.precio * item.cantidad;
+
+    mensaje +=
+      "• " +
+      item.cantidad +
+      "× " +
+      item.nombre +
+      " — RD$" +
+      subtotal +
+      "\n";
+
   });
 
-  mensaje += "%0A💰 TOTAL: RD$" + total;
-  mensaje += "%0A💵 Pago: Contra entrega";
+  if (notas) {
 
-  // CAMBIA ESTE NÚMERO POR EL WHATSAPP DE LA CAFETERÍA
-  const numero = "18098142865";
+    mensaje +=
+      "\n📝 *NOTAS*\n" +
+      notas +
+      "\n";
 
-  window.open(
-    "https://wa.me/" + numero + "?text=" + mensaje,
-    "_blank"
+  }
+
+  mensaje +=
+    "\n💰 *TOTAL: RD$" +
+    total +
+    "*\n";
+
+  mensaje +=
+    "💵 *PAGO: CONTRA ENTREGA*\n";
+
+  mensaje +=
+    "\n🟡 *ESTADO: NUEVO*";
+
+  /* Guardamos una copia local mientras
+     conectamos la base de datos */
+
+  registrarVentaLocal();
+
+  const pedidos =
+    JSON.parse(
+      localStorage.getItem("cafeteriaPedidos") || "[]"
+    );
+
+  pedidos.push({
+
+    numeroPedido: pedido,
+
+    fecha: new Date().toISOString(),
+
+    cliente: {
+      nombre,
+      telefono,
+      direccion,
+      referencia,
+      notas
+    },
+
+    productos: carrito.map(item => ({
+      id: item.id,
+      nombre: item.nombre,
+      precio: item.precio,
+      cantidad: item.cantidad
+    })),
+
+    total,
+
+    pago: "Contra entrega",
+
+    estado: "Nuevo"
+
+  });
+
+  localStorage.setItem(
+    "cafeteriaPedidos",
+    JSON.stringify(pedidos)
+  );
+
+  const numero =
+    "18098142865";
+
+  const url =
+    "https://wa.me/" +
+    numero +
+    "?text=" +
+    encodeURIComponent(mensaje);
+
+  window.open(url, "_blank");
+
+  /* Limpiar carrito después del envío */
+
+  carrito = [];
+
+  mostrarCarrito();
+
+  cerrarFormulario();
+
+  alert(
+    "Pedido #" +
+    pedido +
+    " preparado correctamente."
   );
 }
+
+
+/* =========================
+   INICIAR
+========================= */
+
+mostrarProductos();
+
+mostrarCarrito();
 
 </script>
 
